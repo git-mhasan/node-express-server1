@@ -88,24 +88,24 @@ module.exports.deleteUser = (req, res) => {
 };
 
 module.exports.updateBulkUser = (req, res) => {
-  const updateInfo = req.body;
-  if (req.error) {
-    res.send(req.error);
-  } else {
-    const parsedId = Number(id);
+  const usersUpdate = req.body;
 
-    updateInfo?.gender ? users[parsedId].gender = updateInfo?.gender : users[parsedId].gender;
-    updateInfo?.name ? users[parsedId].name = updateInfo?.name : users[parsedId].name;
-    updateInfo?.contact ? users[parsedId].contact = updateInfo?.contact : users[parsedId].contact;
-    updateInfo?.address ? users[parsedId].address = updateInfo?.address : users[parsedId].address;
-    updateInfo?.photoUrl ? users[parsedId].photoUrl = updateInfo?.photoUrl : users[parsedId].photoUrl;
-
-    try {
-      fs.writeFileSync('user.json', JSON.stringify(users));
-      res.json(users[parsedId]);
-    } catch (error) {
-      res.send(error);
+  const newUserList = users?.map(user => {
+    const usr = usersUpdate.find(usr => usr.id === user.id) || {}
+    if (Object.keys(usr).length !== 0) {
+      usr?.gender ? user.gender = usr?.gender : user.gender;
+      usr?.name ? user.name = usr?.name : user.name;
+      usr?.contact ? user.contact = usr?.contact : user.contact;
+      usr?.address ? user.address = usr?.address : user.address;
+      usr?.photoUrl ? user.photoUrl = usr?.photoUrl : user.photoUrl;
     }
+    return user;
+  })
+  try {
+    fs.writeFileSync('user.json', JSON.stringify(users));
+    res.json(newUserList);
+  } catch (error) {
+    res.send(error);
   }
 };
 

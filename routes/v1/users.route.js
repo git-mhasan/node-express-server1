@@ -25,7 +25,8 @@ router
 
 router
   .route("/bulk-update")
-  .put(verifyUpdate, usersControllers.updateBulkUser)
+  .put(usersControllers.updateBulkUser)
+// .put(verifyUpdate, usersControllers.updateBulkUser)
 
 
 router
