@@ -9,9 +9,11 @@ const verifyUpdate = (req, res, next) => {
     //     "contact"
     //     "address"
     //     "photoUrl"
+
+    // for bulk update an array of user is expected
     const user = req.body;
 
-    if (Object.keys(user).length !== 0) {
+    if (user?.length !== 0) {
         if (
             // user.hasOwnProperty('id') &
             user.hasOwnProperty('gender') ||

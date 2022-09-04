@@ -64,6 +64,7 @@ module.exports.updateUser = (req, res) => {
     }
   }
 };
+
 module.exports.deleteUser = (req, res) => {
   const { id } = req.params;
   const updateInfo = req.body;
@@ -86,4 +87,25 @@ module.exports.deleteUser = (req, res) => {
   }
 };
 
+module.exports.updateBulkUser = (req, res) => {
+  const updateInfo = req.body;
+  if (req.error) {
+    res.send(req.error);
+  } else {
+    const parsedId = Number(id);
+
+    updateInfo?.gender ? users[parsedId].gender = updateInfo?.gender : users[parsedId].gender;
+    updateInfo?.name ? users[parsedId].name = updateInfo?.name : users[parsedId].name;
+    updateInfo?.contact ? users[parsedId].contact = updateInfo?.contact : users[parsedId].contact;
+    updateInfo?.address ? users[parsedId].address = updateInfo?.address : users[parsedId].address;
+    updateInfo?.photoUrl ? users[parsedId].photoUrl = updateInfo?.photoUrl : users[parsedId].photoUrl;
+
+    try {
+      fs.writeFileSync('user.json', JSON.stringify(users));
+      res.json(users[parsedId]);
+    } catch (error) {
+      res.send(error);
+    }
+  }
+};
 

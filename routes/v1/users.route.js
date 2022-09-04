@@ -1,8 +1,8 @@
 const express = require("express");
 const usersControllers = require("../../controllers/users.controller");
-const validateNewUser = require("../../middleware/validateNewUser")
-const validateId = require("../../middleware/validateId")
-const verifyUpdate = require("../../middleware/verifyUpdate")
+const validateNewUser = require("../../middleware/validateNewUser");
+const validateId = require("../../middleware/validateId");
+const verifyUpdate = require("../../middleware/verifyUpdate");
 const router = express.Router();
 
 
@@ -25,7 +25,7 @@ router
 
 router
   .route("/bulk-update")
-// .put(validateId, usersControllers.deleteUser)
+  .put(verifyUpdate, usersControllers.updateBulkUser)
 
 
 router
